@@ -6,7 +6,7 @@ import os
 
 app = Flask(__name__)
 
-# === Ключі (твій токен GPT і Telegram) ===
+# Ключі (твій токен GPT і Telegram)
 openai.api_key = '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'
 BOT_TOKEN = '7944590947:AAGzJ9xsQVeiAnAcpSy8rOSx5SgCtB8Fk-Q'
 CHAT_ID = '383196764'
@@ -41,9 +41,14 @@ def gpt():
         messages = openai.beta.threads.messages.list(thread_id=thread.id)
         reply = messages.data[0].content[0].text.value
 
+        # 🧪 Логування для Render → Logs
+        print("GPT input:", user_message)
+        print("GPT reply:", reply)
+
         return jsonify({"result": reply})
 
     except Exception as e:
+        print("GPT error:", str(e))
         return jsonify({"result": f"⚠️ GPT error: {str(e)}"})
 
 # === Сповіщення в Telegram ===
